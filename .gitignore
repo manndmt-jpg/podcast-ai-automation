@@ -1,0 +1,86 @@
+# Sensitive Data - Never commit these!
+.env
+*.env
+**/.env*
+*_env
+.podcast_env
+
+# API Keys and Tokens
+**/config/api_keys*
+**/config/tokens*
+**/config/secrets*
+
+# Personal Data - Keep your content private
+data/audio/*
+!data/audio/.gitkeep
+data/transcripts/*
+!data/transcripts/.gitkeep
+data/summaries/*
+!data/summaries/.gitkeep
+
+# Logs contain personal information
+logs/*
+!logs/.gitkeep
+
+# Personal Configuration
+config/feeds.json
+config/personal_*
+
+# Python
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Local testing
+test_*
+*_test.py
+sandbox/

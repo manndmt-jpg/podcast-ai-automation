@@ -1,0 +1,17 @@
+[
+  {
+    "name": "How I AI",
+    "rss": "https://anchor.fm/s/1035b1568/podcast/rss",
+    "tags": ["AI", "product", "founders"]
+  },
+  {
+    "name": "Freakonomics Radio",
+    "rss": "https://feeds.simplecast.com/Y8lFbOT4",
+    "tags": ["economics", "society", "business", "policy"]
+  },
+  {
+    "name": "a16z Podcast",
+    "rss": "https://feeds.simplecast.com/JGE3yC0V",
+    "tags": ["tech", "venture capital", "startups"]
+  }
+]

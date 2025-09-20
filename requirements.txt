@@ -1,0 +1,14 @@
+# Core AI Dependencies
+anthropic>=0.25.0
+faster-whisper>=1.0.0
+langdetect>=1.0.9
+
+# RSS and Web Parsing
+feedparser>=6.0.0
+
+# Notion Integration (Optional)
+notion-client>=2.0.0
+
+# Additional Dependencies
+pathlib2>=2.3.0
+requests>=2.25.0
