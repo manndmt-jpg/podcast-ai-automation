@@ -9,7 +9,8 @@ A comprehensive automation system that processes podcast RSS feeds, extracts mea
 - **🌍 Multilingual Support**: Auto-detects and translates German, French, Spanish, and 15+ languages
 - **🤖 AI-Powered Processing**: Uses Claude Sonnet 4 for high-quality summaries and quote extraction
 - **📝 Smart Summaries**: Educational format with key sections, lessons, and reflection questions
-- **💬 Quote Extraction**: Automatically finds and formats memorable quotes from each episode
+- **💬 Inline Quote Integration**: Embeds relevant quotes directly within summary sections
+- **📑 Chapter Extraction**: Creates timestamped chapters for episodes over 45 minutes
 - **🏷️ Auto-Tagging**: Generates topical tags and combines with your custom feed tags
 - **📊 Notion Integration**: Pushes summaries to Notion database with full metadata
 - **⏰ Cron Automation**: Runs automatically every 2 hours to catch new episodes
@@ -21,11 +22,12 @@ A comprehensive automation system that processes podcast RSS feeds, extracts mea
 2. **Audio Download**: Downloads MP3 files locally
 3. **Transcription**: Uses Whisper AI with automatic language detection
 4. **Translation**: Translates non-English content to English using Claude
-5. **Quote Extraction**: Finds 3-5 memorable quotes with context
-6. **Summarization**: Creates educational summaries with Claude Sonnet 4
-7. **Auto-Tagging**: Generates relevant topic tags
-8. **Notion Publishing**: Creates formatted pages with metadata
-9. **Progress Tracking**: Marks episodes as processed
+5. **Quote Integration**: Embeds memorable quotes directly in relevant sections
+6. **Chapter Creation**: Generates timestamped chapters for long episodes (45+ minutes)
+7. **Summarization**: Creates educational summaries with Claude Sonnet 4
+8. **Auto-Tagging**: Generates relevant topic tags
+9. **Notion Publishing**: Creates formatted pages with metadata
+10. **Progress Tracking**: Marks episodes as processed
 
 ## 🚀 Quick Start
 
@@ -114,7 +116,8 @@ podcast-automation/
 │   ├── download_audio.py    # MP3 downloading
 │   ├── transcribe.py        # Whisper transcription
 │   ├── translate.py         # Claude translation
-│   ├── extract_quotes.py    # Quote extraction
+│   ├── extract_quotes.py    # Quote extraction (standalone)
+│   ├── extract_chapters.py  # Chapter extraction with timestamps
 │   ├── summarise_with_quotes.py  # Enhanced summarization
 │   └── push_to_notion.py    # Notion integration
 ├── config/
@@ -135,29 +138,32 @@ podcast-automation/
 
 **Process**: Automatic language detection → transcription in original language → translation to English → summarization
 
-## 💬 Quote Format
+## 💬 Quote Integration
 
-Each summary includes a "Key Quotes" section:
+Quotes are embedded directly within relevant sections:
 
 ```markdown
-## 💬 Key Quotes
+### Product Development Strategy
 
-**1.** *"The most important insight about startups is..."*
-— **Guest Name**
-_Context: Discussing product-market fit strategies_
+Building on the discussion of market validation, the conversation shifts to execution strategies. The key insight here revolves around speed versus perfection.
 
-**2.** *"What I learned from 10 years of building products..."*
-— **Host Name**
-_Context: Sharing lessons learned from previous ventures_
+- Focus on rapid iteration cycles
+- Prioritize user feedback over internal opinions
+- Build the minimum viable solution first
+
+**"The biggest mistake founders make is building features nobody wants"** —**Guest Name**
+
+**Why this matters:** Speed to market often trumps perfect execution in competitive landscapes.
 ```
 
 ## 📊 Example Output
 
 Your summaries will include:
 
-- **Episode Overview**: 2-3 sentence summary with key themes
-- **Key Quotes**: 3-5 memorable quotes with speaker attribution
-- **Key Sections**: Detailed breakdown with smooth transitions
+- **Episode Overview**: Comprehensive 1-minute summary (200-300 words)
+- **Episode Chapters**: Timestamped sections for long episodes (45+ minutes)
+- **Inline Quotes**: Memorable quotes embedded directly in relevant sections
+- **Key Sections**: Detailed breakdown with inline quotes and smooth transitions
 - **Top 5 Lessons**: Actionable takeaways
 - **Reflection Questions**: For deeper learning
 
@@ -171,9 +177,9 @@ Edit the prompt in `scripts/summarise_with_quotes.py` to change the summary form
 
 The system automatically handles 15+ languages. To add custom language handling, modify `scripts/translate.py`.
 
-### Custom Quote Criteria
+### Custom Quote Integration
 
-Update the quote extraction prompt in `scripts/extract_quotes.py` to focus on different types of quotes.
+Modify the inline quote instructions in the `build_prompt()` function within `scripts/summarise_with_quotes.py`.
 
 ### Different AI Models
 
