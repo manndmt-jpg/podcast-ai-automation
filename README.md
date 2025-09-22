@@ -13,7 +13,7 @@ A comprehensive automation system that processes podcast RSS feeds, extracts mea
 - **📑 Chapter Extraction**: Creates topic-based chapter structure for episodes over 45 minutes
 - **🏷️ Auto-Tagging**: Generates topical tags and combines with your custom feed tags
 - **📊 Notion Integration**: Pushes summaries to Notion database with full metadata
-- **💰 Cost Tracking**: Monitors AI service costs (Whisper, Claude) with detailed breakdowns
+- **💰 Cost Tracking**: Monitors AI service costs (Claude only - Whisper is free local) with detailed breakdowns
 - **⏰ Cron Automation**: Runs automatically every 2 hours to catch new episodes
 - **🎯 Duplicate Detection**: Tracks processed episodes to avoid reprocessing
 
@@ -21,7 +21,7 @@ A comprehensive automation system that processes podcast RSS feeds, extracts mea
 
 1. **Feed Monitoring**: Checks RSS feeds for new episodes
 2. **Audio Download**: Downloads MP3 files locally
-3. **Transcription**: Uses Whisper AI with automatic language detection
+3. **Transcription**: Uses local faster-whisper with automatic language detection (FREE)
 4. **Translation**: Translates non-English content to English using Claude
 5. **Quote Integration**: Embeds memorable quotes directly in relevant sections
 6. **Chapter Creation**: Generates topic-based chapter structure for long episodes (45+ minutes)
@@ -153,7 +153,7 @@ podcast-automation/
 The system automatically tracks costs for all AI services used:
 
 ### **Tracked Services:**
-- **Whisper API**: $0.006 per minute of audio
+- **Whisper Transcription**: FREE (using local faster-whisper)
 - **Claude Translation**: Haiku model (~$0.00025 per 1K tokens)
 - **Claude Summarization**: Sonnet 4 model (~$0.015 per 1K input tokens)
 - **Claude Auto-tagging**: Haiku model for tag generation
@@ -178,8 +178,8 @@ Total Today: $2.45
 Total This Month: $47.83
 
 Recent Episodes:
-- Lenny's Podcast: AI Leadership ($0.89)
-  - Whisper: $0.42 (70.3 min)
+- Lenny's Podcast: AI Leadership ($0.47)
+  - Whisper: $0.00 (70.3 min, local)
   - Translation: $0.08 (Haiku)
   - Summary: $0.35 (Sonnet-4)
   - Tagging: $0.04 (Haiku)

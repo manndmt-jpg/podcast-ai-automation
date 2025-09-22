@@ -23,7 +23,7 @@ class CostTracker:
             'output': 15.00  # $15 per 1M output tokens
         },
         'whisper': {
-            'per_minute': 0.006  # $0.006 per minute of audio
+            'per_minute': 0.00  # $0.00 - using local faster-whisper (free)
         }
     }
 
@@ -37,10 +37,10 @@ class CostTracker:
         self.session_costs = []
 
     def log_whisper_cost(self, audio_duration_minutes: float, episode_name: str = ""):
-        """Log Whisper transcription cost"""
-        cost = audio_duration_minutes * self.PRICING['whisper']['per_minute']
+        """Log Whisper transcription cost (FREE - using local faster-whisper)"""
+        cost = audio_duration_minutes * self.PRICING['whisper']['per_minute']  # $0.00
         self._append_to_log(
-            f"Whisper: {audio_duration_minutes:.1f} min audio = ${cost:.3f}",
+            f"Whisper: {audio_duration_minutes:.1f} min audio = ${cost:.3f} (local, free)",
             episode_name
         )
         self.session_costs.append(('whisper', cost))
