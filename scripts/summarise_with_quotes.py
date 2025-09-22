@@ -26,7 +26,7 @@ def build_prompt(transcript: str) -> str:
         "1) Start with a 2–4 sentence BRIDGE PARAGRAPH that explains how this section connects to the previous one.\n"
         "2) Then bullets with the concrete details (steps, tools, numbers, examples). Keep bullets crisp.\n"
         "3) Include 1-2 RELEVANT QUOTES from the transcript that capture key insights for this section. Format as:\n"
-        "   **\"Exact quote from transcript\"** —**Speaker Name**\n"
+        "   **\"Exact quote from transcript\"** — **Speaker Name**\n"
         "4) End the section with one sentence: **Why this matters:** <practical takeaway>.\n"
         "Use ### headings for section titles. Bold important names, tools, and numbers.\n\n"
         "## Top 5 Lessons Recap\n"
@@ -74,6 +74,7 @@ def summarise_with_sonnet_and_quotes(transcript_path: str, out_dir: str) -> str:
     )
 
     summary = resp.content[0].text
+    usage = resp.usage  # Store usage for cost tracking
 
     # Step 3: Insert chapters after Episode Overview (if available)
     if chapters and duration:
@@ -105,6 +106,7 @@ def summarise_with_sonnet_and_quotes(transcript_path: str, out_dir: str) -> str:
 
     # Step 5: Save chapters separately if found
     import json
+
     if chapters:
         chapters_path = os.path.join(out_dir, base + "_chapters.json")
         with open(chapters_path, "w", encoding="utf-8") as f:
@@ -114,10 +116,10 @@ def summarise_with_sonnet_and_quotes(transcript_path: str, out_dir: str) -> str:
             }, f, indent=2, ensure_ascii=False)
         print(f"📑 Chapters saved to: {chapters_path}")
 
-    return out_path
+    return out_path, usage
 
-# Keep original function for backward compatibility
-def summarise_with_sonnet(transcript_path: str, out_dir: str) -> str:
+# Keep original function for backward compatibility - returns tuple now
+def summarise_with_sonnet(transcript_path: str, out_dir: str):
     return summarise_with_sonnet_and_quotes(transcript_path, out_dir)
 
 if __name__ == "__main__":

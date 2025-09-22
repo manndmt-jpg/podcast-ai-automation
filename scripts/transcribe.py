@@ -14,12 +14,17 @@ def transcribe_file(audio_path: str, out_dir: str, model_size: str = "small"):
     # Print detected language info
     print(f"Detected language: {info.language} (confidence: {info.language_probability:.2f})")
 
+    # Track duration for cost calculation
+    duration_seconds = 0
     with open(txt_path, "w", encoding="utf-8") as f:
         for s in segments:
             line = f"[{s.start:.2f} --> {s.end:.2f}] {s.text.strip()}"
             print(line)
             f.write(line + "\n")
-    return txt_path
+            duration_seconds = max(duration_seconds, s.end)
+
+    # Return both path and duration in minutes
+    return txt_path, duration_seconds / 60.0
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
@@ -28,5 +33,5 @@ if __name__ == "__main__":
     audio_path = sys.argv[1]
     out_dir = sys.argv[2]
     model_size = sys.argv[3] if len(sys.argv) > 3 else "small"
-    out = transcribe_file(audio_path, out_dir, model_size)
-    print("Saved:", out)
+    out, duration = transcribe_file(audio_path, out_dir, model_size)
+    print(f"Saved: {out} (Duration: {duration:.1f} minutes)")

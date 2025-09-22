@@ -76,15 +76,16 @@ Text to translate:
             max_tokens=8000,
             messages=[{"role": "user", "content": prompt}]
         )
-        return response.content[0].text.strip()
+        # Return both translated text and token usage
+        return response.content[0].text.strip(), response.usage
     except Exception as e:
         print(f"Translation failed: {e}")
-        return None
+        return None, None
 
 def translate_transcript(transcript_path, output_dir=None):
     """
     Main function to translate a transcript if needed
-    Returns path to the transcript to use for summarization (original or translated)
+    Returns tuple: (path to transcript, usage stats if translated)
     """
     transcript_path = Path(transcript_path)
 
@@ -94,7 +95,7 @@ def translate_transcript(transcript_path, output_dir=None):
             text = f.read()
     except Exception as e:
         print(f"Error reading transcript {transcript_path}: {e}")
-        return str(transcript_path)
+        return str(transcript_path), None
 
     # Detect language
     detected_lang = detect_language(text)
@@ -106,7 +107,7 @@ def translate_transcript(transcript_path, output_dir=None):
     if detected_lang == 'en' or detected_lang == 'unknown':
         if detected_lang == 'unknown':
             print("⚠️  Could not detect language, assuming English")
-        return str(transcript_path)
+        return str(transcript_path), None
 
     # Set output directory
     if output_dir is None:
@@ -121,25 +122,25 @@ def translate_transcript(transcript_path, output_dir=None):
     # Check if translation already exists
     if translated_path.exists():
         print(f"✅ Translation already exists: {translated_path}")
-        return str(translated_path)
+        return str(translated_path), None
 
     # Translate the text
     print(f"🔄 Translating from {lang_name} to English...")
-    translated_text = translate_with_claude(text, detected_lang, 'en')
+    translated_text, usage = translate_with_claude(text, detected_lang, 'en')
 
     if translated_text is None:
         print("❌ Translation failed, using original transcript")
-        return str(transcript_path)
+        return str(transcript_path), None
 
     # Save translated text
     try:
         with open(translated_path, 'w', encoding='utf-8') as f:
             f.write(translated_text)
         print(f"✅ Translation saved: {translated_path}")
-        return str(translated_path)
+        return str(translated_path), usage
     except Exception as e:
         print(f"Error saving translation: {e}")
-        return str(transcript_path)
+        return str(transcript_path), None
 
 if __name__ == "__main__":
     import sys

@@ -10,9 +10,10 @@ A comprehensive automation system that processes podcast RSS feeds, extracts mea
 - **🤖 AI-Powered Processing**: Uses Claude Sonnet 4 for high-quality summaries and quote extraction
 - **📝 Smart Summaries**: Educational format with key sections, lessons, and reflection questions
 - **💬 Inline Quote Integration**: Embeds relevant quotes directly within summary sections
-- **📑 Chapter Extraction**: Creates timestamped chapters for episodes over 45 minutes
+- **📑 Chapter Extraction**: Creates topic-based chapter structure for episodes over 45 minutes
 - **🏷️ Auto-Tagging**: Generates topical tags and combines with your custom feed tags
 - **📊 Notion Integration**: Pushes summaries to Notion database with full metadata
+- **💰 Cost Tracking**: Monitors AI service costs (Whisper, Claude) with detailed breakdowns
 - **⏰ Cron Automation**: Runs automatically every 2 hours to catch new episodes
 - **🎯 Duplicate Detection**: Tracks processed episodes to avoid reprocessing
 
@@ -23,11 +24,12 @@ A comprehensive automation system that processes podcast RSS feeds, extracts mea
 3. **Transcription**: Uses Whisper AI with automatic language detection
 4. **Translation**: Translates non-English content to English using Claude
 5. **Quote Integration**: Embeds memorable quotes directly in relevant sections
-6. **Chapter Creation**: Generates timestamped chapters for long episodes (45+ minutes)
+6. **Chapter Creation**: Generates topic-based chapter structure for long episodes (45+ minutes)
 7. **Summarization**: Creates educational summaries with Claude Sonnet 4
 8. **Auto-Tagging**: Generates relevant topic tags
-9. **Notion Publishing**: Creates formatted pages with metadata
-10. **Progress Tracking**: Marks episodes as processed
+9. **Cost Tracking**: Logs detailed AI service costs and usage
+10. **Notion Publishing**: Creates formatted pages with metadata
+11. **Progress Tracking**: Marks episodes as processed
 
 ## 🚀 Quick Start
 
@@ -117,9 +119,14 @@ podcast-automation/
 │   ├── transcribe.py        # Whisper transcription
 │   ├── translate.py         # Claude translation
 │   ├── extract_quotes.py    # Quote extraction (standalone)
-│   ├── extract_chapters.py  # Chapter extraction with timestamps
+│   ├── extract_chapters.py  # Chapter structure extraction
 │   ├── summarise_with_quotes.py  # Enhanced summarization
 │   └── push_to_notion.py    # Notion integration
+├── utils/
+│   └── cost_tracker.py      # Cost tracking and analysis
+├── evals/
+│   ├── view_costs.py        # Cost reporting and analysis
+│   └── test_cost_tracking.py # Cost tracking tests
 ├── config/
 │   ├── feeds.json           # Your podcast subscriptions
 │   └── feeds.example.json   # Example configuration
@@ -128,6 +135,9 @@ podcast-automation/
 │   ├── transcripts/        # Original & translated transcripts
 │   └── summaries/          # Final summaries & quotes
 └── logs/                   # Execution logs (gitignored)
+    ├── cron.log            # Pipeline execution logs
+    ├── costs.log           # Detailed cost breakdown
+    └── daily_costs.json    # Daily/monthly cost totals
 ```
 
 ## 🌍 Language Support
@@ -137,6 +147,50 @@ podcast-automation/
 **Full Support**: French, Spanish, Italian, Portuguese, Dutch, Polish, Russian, Japanese, Korean, Chinese (Simplified/Traditional), Arabic, Hindi
 
 **Process**: Automatic language detection → transcription in original language → translation to English → summarization
+
+## 💰 Cost Tracking
+
+The system automatically tracks costs for all AI services used:
+
+### **Tracked Services:**
+- **Whisper API**: $0.006 per minute of audio
+- **Claude Translation**: Haiku model (~$0.00025 per 1K tokens)
+- **Claude Summarization**: Sonnet 4 model (~$0.015 per 1K input tokens)
+- **Claude Auto-tagging**: Haiku model for tag generation
+
+### **Cost Reports:**
+
+```bash
+# View detailed cost breakdown
+python3 evals/view_costs.py
+
+# View last 10 episodes
+python3 evals/view_costs.py --tail 10
+
+# View cost summary
+python3 evals/view_costs.py --summary
+```
+
+### **Example Output:**
+```
+=== AI Cost Summary ===
+Total Today: $2.45
+Total This Month: $47.83
+
+Recent Episodes:
+- Lenny's Podcast: AI Leadership ($0.89)
+  - Whisper: $0.42 (70.3 min)
+  - Translation: $0.08 (Haiku)
+  - Summary: $0.35 (Sonnet-4)
+  - Tagging: $0.04 (Haiku)
+
+Average per episode: $0.73
+Estimated monthly: $54.75 (75 episodes)
+```
+
+### **Cost Files:**
+- `logs/costs.log` - Detailed per-operation costs
+- `logs/daily_costs.json` - Daily/monthly aggregates
 
 ## 💬 Quote Integration
 
@@ -161,7 +215,7 @@ Building on the discussion of market validation, the conversation shifts to exec
 Your summaries will include:
 
 - **Episode Overview**: Comprehensive 1-minute summary (200-300 words)
-- **Episode Chapters**: Timestamped sections for long episodes (45+ minutes)
+- **Episode Structure**: Topic-based chapter outline for long episodes (45+ minutes)
 - **Inline Quotes**: Memorable quotes embedded directly in relevant sections
 - **Key Sections**: Detailed breakdown with inline quotes and smooth transitions
 - **Top 5 Lessons**: Actionable takeaways
@@ -180,6 +234,10 @@ The system automatically handles 15+ languages. To add custom language handling,
 ### Custom Quote Integration
 
 Modify the inline quote instructions in the `build_prompt()` function within `scripts/summarise_with_quotes.py`.
+
+### Cost Tracking Configuration
+
+Adjust cost rates in `utils/cost_tracker.py` if API pricing changes. View tracked costs with `python3 evals/view_costs.py`.
 
 ### Different AI Models
 
