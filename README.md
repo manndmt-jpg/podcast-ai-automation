@@ -16,6 +16,8 @@ A comprehensive automation system that processes podcast RSS feeds, extracts mea
 - **💰 Cost Tracking**: Monitors AI service costs (Claude only - Whisper is free local) with detailed breakdowns
 - **⏰ Cron Automation**: Runs automatically every 2 hours to catch new episodes
 - **🎯 Duplicate Detection**: Tracks processed episodes to avoid reprocessing
+- **🧪 Evaluation Suite**: 9 comprehensive monitoring scripts for health, quality, and performance analysis
+- **📈 Automated Monitoring**: Daily evaluation runs with detailed logging and trend analysis
 
 ## 🛠️ How It Works
 
@@ -99,13 +101,16 @@ Edit `config/feeds.json`:
 
 ### Scheduling Automation
 
-Set up a cron job to run every 2 hours:
+Set up cron jobs for automation and monitoring:
 
 ```bash
 crontab -e
-# Add this line:
+# Add these lines:
 0 */2 * * * /path/to/your/run_cron.sh
+0 10 * * * cd /path/to/your/project && python3 evals/eval_runner.py --daily >> logs/eval_runner.log 2>&1
 ```
+
+The first job runs the main pipeline every 2 hours, the second runs daily evaluations at 10 AM.
 
 ## 📁 Project Structure
 
@@ -124,9 +129,16 @@ podcast-automation/
 │   └── push_to_notion.py    # Notion integration
 ├── utils/
 │   └── cost_tracker.py      # Cost tracking and analysis
-├── evals/
-│   ├── view_costs.py        # Cost reporting and analysis
-│   └── test_cost_tracking.py # Cost tracking tests
+├── evals/                   # Evaluation & monitoring suite
+│   ├── eval_runner.py       # Centralized evaluation runner
+│   ├── feed_health.py       # RSS feed health monitoring
+│   ├── quality_check.py     # Content quality analysis
+│   ├── processing_stats.py  # Performance metrics & efficiency
+│   ├── view_costs.py        # Enhanced cost reporting
+│   ├── duplicate_analysis.py # Duplicate episode detection
+│   ├── view_eval_logs.py    # Evaluation log viewer
+│   ├── explain_warnings.py  # Issue troubleshooting helper
+│   └── test_cost_tracking.py # Cost tracking validation
 ├── config/
 │   ├── feeds.json           # Your podcast subscriptions
 │   └── feeds.example.json   # Example configuration
@@ -137,7 +149,9 @@ podcast-automation/
 └── logs/                   # Execution logs (gitignored)
     ├── cron.log            # Pipeline execution logs
     ├── costs.log           # Detailed cost breakdown
-    └── daily_costs.json    # Daily/monthly cost totals
+    ├── daily_costs.json    # Daily/monthly cost totals
+    ├── eval_runner.log     # Daily evaluation results
+    └── eval_*.log          # Individual evaluation logs
 ```
 
 ## 🌍 Language Support
@@ -147,6 +161,42 @@ podcast-automation/
 **Full Support**: French, Spanish, Italian, Portuguese, Dutch, Polish, Russian, Japanese, Korean, Chinese (Simplified/Traditional), Arabic, Hindi
 
 **Process**: Automatic language detection → transcription in original language → translation to English → summarization
+
+## 🧪 Evaluation Suite
+
+The system includes comprehensive monitoring and evaluation scripts to track health, quality, and performance:
+
+### **Available Evaluations:**
+
+```bash
+# Daily health check
+python3 evals/feed_health.py
+
+# Content quality analysis
+python3 evals/quality_check.py --recent 5
+
+# Performance metrics
+python3 evals/processing_stats.py --days 7
+
+# Cost analysis
+python3 evals/view_costs.py
+
+# Duplicate detection
+python3 evals/duplicate_analysis.py
+
+# Run all evaluations
+python3 evals/eval_runner.py --daily
+```
+
+### **Key Features:**
+- **Feed Health**: Monitor RSS feed availability and content validation
+- **Quality Analysis**: Check transcript/summary quality and detect issues
+- **Performance Stats**: Analyze processing efficiency and success rates
+- **Cost Monitoring**: Track AI service usage and spending patterns
+- **Duplicate Detection**: Identify and resolve duplicate processing issues
+- **Automated Logging**: Daily evaluation results with trend analysis
+
+See `evals/README.md` for detailed documentation and usage examples.
 
 ## 💰 Cost Tracking
 
@@ -191,6 +241,68 @@ Estimated monthly: $54.75 (75 episodes)
 ### **Cost Files:**
 - `logs/costs.log` - Detailed per-operation costs
 - `logs/daily_costs.json` - Daily/monthly aggregates
+
+## 📊 System Monitoring & Evaluation
+
+The system includes comprehensive evaluation tools to monitor pipeline health, quality, and performance:
+
+### **Evaluation Suite:**
+
+```bash
+# Run daily health checks
+python3 evals/eval_runner.py --daily
+
+# Weekly comprehensive analysis
+python3 evals/eval_runner.py --weekly
+
+# View evaluation results and trends
+python3 evals/view_eval_logs.py summary
+```
+
+### **Available Evaluations:**
+- **Feed Health**: Monitor RSS feeds for availability and content issues
+- **Quality Check**: Analyze transcript and summary quality metrics
+- **Performance Stats**: Track processing efficiency and success rates
+- **Duplicate Detection**: Find and resolve duplicate episode processing
+- **Cost Analysis**: Monitor AI service usage and spending trends
+
+### **Evaluation Logs:**
+- `logs/eval_health.log` - Feed availability and content validation
+- `logs/eval_quality.log` - Content quality analysis results
+- `logs/eval_performance.log` - Processing statistics and efficiency metrics
+- `logs/eval_duplicates.log` - Duplicate detection and cleanup suggestions
+- `logs/eval_summary.json` - Historical trends and aggregated metrics
+
+### **Understanding Warnings:**
+
+```bash
+# Explain any warning you encounter
+python3 evals/explain_warnings.py date_parsing
+
+# Auto-detect warning type from message
+python3 evals/explain_warnings.py "Could not parse date..."
+
+# See all possible warning types
+python3 evals/explain_warnings.py
+```
+
+### **Individual Evaluation Scripts:**
+
+```bash
+# Check RSS feed health
+python3 evals/feed_health.py --verbose
+
+# Analyze content quality
+python3 evals/quality_check.py --recent 10
+
+# Review processing performance
+python3 evals/processing_stats.py --days 7
+
+# Check for duplicates
+python3 evals/duplicate_analysis.py --cleanup
+```
+
+For detailed documentation on all evaluation tools, see `evals/README.md`.
 
 ## 💬 Quote Integration
 
