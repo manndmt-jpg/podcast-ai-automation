@@ -5,13 +5,38 @@
     "tags": ["AI", "product", "founders"]
   },
   {
-    "name": "Freakonomics Radio",
-    "rss": "https://feeds.simplecast.com/Y8lFbOT4",
-    "tags": ["economics", "society", "business", "policy"]
+    "name": "Lenny's Podcast: Product | Career | Growth",
+    "rss": "https://api.substack.com/feed/podcast/10845.rss",
+    "tags": ["product", "career", "growth"]
+  },
+  {
+    "name": "How I Built This with Guy Raz",
+    "rss": "https://rss.art19.com/how-i-built-this",
+    "tags": ["entrepreneurship", "startups", "innovation"]
   },
   {
     "name": "a16z Podcast",
     "rss": "https://feeds.simplecast.com/JGE3yC0V",
     "tags": ["tech", "venture capital", "startups"]
+  },
+  {
+    "name": "No Priors: Artificial Intelligence | Technology | Startups",
+    "rss": "https://feeds.megaphone.fm/nopriors",
+    "tags": ["AI", "Tech", "Startups", "Venture Capital", "Innovation"]
+  },
+  {
+    "name": "Latent Space: The AI Engineer Podcast",
+    "rss": "https://rss.flightcast.com/vgnxzgiwwzwke85ym53fjnzu.xml",
+    "tags": ["AI", "engineering", "infrastructure", "multimodal models", "agents", "innovation", "technology"]
+  },
+  {
+    "name": "TWIML AI Podcast",
+    "rss": "https://feeds.megaphone.fm/MLN2155636147",
+    "tags": ["Machine Learning", "AI", "Deep Learning", "Research", "Engineering", "Innovation", "Models"]
+  },
+  {
+    "name": "The Diary of a CEO",
+    "rss": "https://rss2.flightcast.com/xmsftuzjjykcmqwolaqn6mdn",
+    "tags": ["Business", "Entrepreneurship", "Leadership", "Personal Development", "Mindset", "Self-Improvement", "Productivity", "Culture", "Society", "Education"]
   }
 ]

@@ -73,7 +73,7 @@ Text to translate:
     try:
         response = client.messages.create(
             model="claude-3-5-haiku-20241022",  # Using cheaper model for translation
-            max_tokens=8000,
+            max_tokens=32000,  # Increased for long podcasts (German episodes often 60+ min)
             messages=[{"role": "user", "content": prompt}]
         )
         # Return both translated text and token usage
