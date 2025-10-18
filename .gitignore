@@ -1,0 +1,43 @@
+# Environment files
+.env
+.podcast_env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+
+# Data files (too large for git)
+data/audio/*
+data/transcripts/*
+data/summaries/*
+data/seen.json
+
+# Logs
+logs/*.log
+logs/*.json
+
+# System files
+.DS_Store
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Keep directory structure
+!data/.gitkeep
+!logs/.gitkeep
+
+# Config files with potentially sensitive info
+config/feeds.json
+config/youtube_links.txt

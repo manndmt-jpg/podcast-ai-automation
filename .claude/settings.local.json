@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git gc:*)",
+      "Bash(find:*)",
+      "Bash(sort:*)",
+      "Bash(python scripts/extract_chapters.py:*)",
+      "Bash(source:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
